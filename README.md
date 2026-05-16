@@ -8,5 +8,5 @@ This version integrates work from Foclabroc, DreamerCG and Spirit.  It does not 
 ## EASY INSTALL
 From a terminal window, run the following:<br>
 ```curl -L bit.ly/foclabroc-switch-all | bash```  (all version)
-
-
+or
+```curl -L foclabroc.short.gy/switch-all | bash```  (all version)
