@@ -232,8 +232,14 @@ class RyujinxGenerator(Generator):
 
     def generate(self, system, rom, playersControllers, metadata, guns, wheels, gameResolution):
 
-        st = os.stat("/userdata/system/switch/appimages/ryujinx-emu.AppImage")
-        os.chmod("/userdata/system/switch/appimages/ryujinx-emu.AppImage", st.st_mode | stat.S_IEXEC)
+        ryujinx_extracted = "/userdata/system/switch/appimages/ryujinx-extracted/usr/bin/Ryujinx"
+        ryujinx_wrapper = "/userdata/system/switch/extra/ryu_wrapper"
+        ryujinx_libs = "/userdata/system/switch/appimages/ryujinx-extracted/usr/lib"
+
+        st = os.stat(ryujinx_extracted)
+        os.chmod(ryujinx_extracted, st.st_mode | stat.S_IEXEC)
+        st = os.stat(ryujinx_wrapper)
+        os.chmod(ryujinx_wrapper, st.st_mode | stat.S_IEXEC)
         st = os.stat("/userdata/system/switch/configgen/generators/detectvideo.sh")
         os.chmod("/userdata/system/switch/configgen/generators/detectvideo.sh", st.st_mode | stat.S_IEXEC)
 
@@ -358,14 +364,10 @@ class RyujinxGenerator(Generator):
         }
 
         rom_nameq = os.path.basename(rom)
-        ryujinx_bin = "/userdata/system/switch/appimages/ryujinx-extracted/usr/bin/Ryujinx"
-        ryujinx_wrapper = "/userdata/system/switch/extra/ryu_wrapper"
-        ryujinx_libs = "/userdata/system/switch/appimages/ryujinx-extracted/usr/lib"
-
         if rom_nameq == 'ryujinx_config.xci_config':
-            commandArray = [ryujinx_wrapper, ryujinx_bin]
+            commandArray = [ryujinx_wrapper, ryujinx_extracted]
         else:
-            commandArray = [ryujinx_wrapper, ryujinx_bin, rom]
+            commandArray = [ryujinx_wrapper, ryujinx_extracted, rom]
 
         return Command.Command(array=commandArray, env=environment)
 
