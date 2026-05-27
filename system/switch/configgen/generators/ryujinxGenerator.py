@@ -333,6 +333,7 @@ class RyujinxGenerator(Generator):
         writelog("Controller mapping after: {}".format(str(sdl_mapping)))
 
         environment = { 
+                        "LD_LIBRARY_PATH": "/userdata/system/switch/appimages/ryujinx-extracted/usr/lib",
                         "SDL_JOYSTICK_HIDAPI": "1",
                         "SDL_JOYSTICK_HIDAPI_XBOX": "0",
                         "SDL_JOYSTICK_HIDAPI_STEAMDECK" : "0",
@@ -357,10 +358,14 @@ class RyujinxGenerator(Generator):
         }
 
         rom_nameq = os.path.basename(rom)
+        ryujinx_bin = "/userdata/system/switch/appimages/ryujinx-extracted/usr/bin/Ryujinx"
+        ryujinx_wrapper = "/userdata/system/switch/extra/ryu_wrapper"
+        ryujinx_libs = "/userdata/system/switch/appimages/ryujinx-extracted/usr/lib"
+
         if rom_nameq == 'ryujinx_config.xci_config':
-            commandArray = ["/userdata/system/switch/appimages/ryujinx-emu.AppImage"]
+            commandArray = [ryujinx_wrapper, ryujinx_bin]
         else:
-            commandArray = ["/userdata/system/switch/appimages/ryujinx-emu.AppImage", rom]
+            commandArray = [ryujinx_wrapper, ryujinx_bin, rom]
 
         return Command.Command(array=commandArray, env=environment)
 
